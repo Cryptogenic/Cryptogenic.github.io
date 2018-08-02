@@ -61,7 +61,7 @@ I spent about an hour or two trying to debug a linker error saying that the symb
 
 Over all, MSVC errors/exceptions suck. Instead of getting a "null pointer dereference", you get this thrown in your face:
 
-```cpp
+```
 Exception thrown: read access violation.
 **std::_Tree_comp_alloc<std::_Tmap_traits<std::basic_string<char,std::char_traits<char>,std::allocator<char> >,Rendering::IGameObject *,std::less<std::basic_string<char,std::char_traits<char>,std::allocator<char> > >,std::allocator<std::pair<std::basic_string<char,std::char_traits<char>,std::allocator<char> > const ,Rendering::IGameObject *> >,0> >::_Myhead**(...) returned 0x4.
 ```
@@ -209,10 +209,7 @@ void Cube::draw(/* */)
 	// ...
 
 	/*
-		We want to optimize performance by minimizing GL calls, so we'll create models
-		in a special way that allows us to cut down our usage of the glUseProgram()
-		call. By creating objects that will use the same shader in sequence, we can use
-		just one call to glUseProgram().
+		We want to optimize performance by minimizing GL calls, so we'll create models in a special way that allows us to cut down our usage of the glUseProgram() call. By creating objects that will use the same shader in sequence, we can use just one call to glUseProgram().
 	*/
 	if (!Managers::SceneManager::checkShaderInUse(this->shader))
 	{
