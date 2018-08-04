@@ -78,7 +78,7 @@ Below is a generic formula for calculating a new position for a transformed vect
 
 `S` = scale, `T` = translate, `x, y, z` are the magnitudes (or positions in the Identity case), and `w` is whether or not the vector is a magnitude or direction.
 
-```
+<pre>
 Transformation Matrix               Identity Matrix           Final Position Matrix
 __              __                  __ __                     __ __
 | Sx, 00, 00, Tx |                  | X |                     | X |
@@ -86,7 +86,7 @@ __              __                  __ __                     __ __
 | 00, 00, Sz, Tz |                  | Z |                     | Z |
 | 00, 00, 00, 01 |                  | W |                     | W |
 __              __                  __ __                     __ __
-```
+</pre>
 
 Looks a bit scary, but it's just plug and play. GLM luckily also handles this for us, we can just give the X, Y, and Z magnitudes into a function called `glm::mat4()` and it'll create the matrix implicitly. But it's important to know what's happening under the hood.
 
@@ -97,36 +97,35 @@ I wanted to modify my model class so it could hide all the of this stuff under i
 ```cpp
 class Model
 {
-    
 public:
     // ...
     // Model manipulation functions
-	void translate(float x, float y, float z);
-	void scale(float x, float y, float z);
-	void rotate(float x, float y, float z, float angle);
+    void translate(float x, float y, float z);
+    void scale(float x, float y, float z);
+    void rotate(float x, float y, float z, float angle);
     // ...
 protected:
     // ...
     glm::mat4 translationMatrix;
-	glm::mat4 scaleMatrix;
-	glm::mat4 rotationMatrix;
+    glm::mat4 scaleMatrix;
+    glm::mat4 rotationMatrix;
     // ...
 };
 
 void Model::translate(float x, float y, float z)
 {
-	translationMatrix = glm::translate(glm::mat4(), glm::vec3(x, y, z));
+    translationMatrix = glm::translate(glm::mat4(), glm::vec3(x, y, z));
 }
 
 void Model::scale(float x, float y, float z)
 {
-	scaleMatrix = glm::scale(glm::vec3(x, y, z));
+    scaleMatrix = glm::scale(glm::vec3(x, y, z));
 }
-//
+
 void Model::rotate(float x, float y, float z, float angle)
 {
-	// Note: angle is in degrees - NOT radians
-	rotationMatrix = glm::rotate(angle, glm::vec3(x, y, z));
+    // Note: angle is in degrees - NOT radians
+    rotationMatrix = glm::rotate(angle, glm::vec3(x, y, z));
 }
 ```
 
@@ -134,7 +133,7 @@ It's amazing how something that can be fairly complex in concept can be so easy 
 
 #### Order Matters
 
-When calculating the final position, it must be calculated by`Final Position Matrix = Translation Matrix * Rotation Matrix * Scale Matrix * Original Model Identity Matrix`. Any other order and you'll have wonky  stuff going on.
+When calculating the final position, it must be calculated by `Final Position Matrix = Translation Matrix * Rotation Matrix * Scale Matrix * Original Model Identity Matrix`. Any other order and you'll have wonky  stuff going on.
 
 
 
@@ -143,11 +142,11 @@ When calculating the final position, it must be calculated by`Final Position Mat
 
 Wait... we call it "Model View Projection" but to calculate the final positions of objects in the world, we have to multiply it in reverse order? (remember, order for multiplication matters with matrices). I honestly can't explain this, you'd think the name would hint at the order given that the order is so important - I guess "Projection Model View" just doesn't have the same ring to it.
 
-```
+<pre>
 Projection = FOV, Aspect Ratio, Near/Far Ranges
 Model = Position matrix of the model being drawn
 View = Camera position, target object
-```
+</pre>
 
 These too are their own matrices, but for sake of brevity I won't detail them like I did the transformation matrix, mostly because they're really confusing and I don't really understand them well anyway, and I didn't need to thanks to GLM.
 
@@ -159,26 +158,26 @@ It only seemed right that I kept track of the projection and the view matrices i
 class SceneManager
 {
 public:
-	// ...
-	// Camera-related stuff
-	void setCamera(glm::vec3 cameraPos, glm::vec3 cameraTarget, glm::vec3 upVector);
-	void setPerspective(float fov, float aspectRatio, float rangeNear, float rangeFar);
-	// ...
+    // ...
+    // Camera-related stuff
+    void setCamera(glm::vec3 cameraPos, glm::vec3 cameraTarget, glm::vec3 upVector);
+    void setPerspective(float fov, float aspectRatio, float rangeNear, float rangeFar);
+    // ...
 private:
-	// ...
-	glm::mat4 view;
-	glm::mat4 projection;
-	// ...
+    // ...
+    glm::mat4 view;
+    glm::mat4 projection;
+    // ...
 }
 
 void SceneManager::setCamera(glm::vec3 cameraPos, glm::vec3 cameraTarget, glm::vec3 upVector)
 {
-	view = glm::lookAt(cameraPos, cameraTarget, upVector);
+    view = glm::lookAt(cameraPos, cameraTarget, upVector);
 }
 
 void SceneManager::setPerspective(float fov, float aspectRatio, float rangeNear, float rangeFar)
 {
-	projection = glm::perspective(glm::radians(fov), aspectRatio, rangeNear, rangeFar);
+    projection = glm::perspective(glm::radians(fov), aspectRatio, rangeNear, rangeFar);
 }
 ```
 
