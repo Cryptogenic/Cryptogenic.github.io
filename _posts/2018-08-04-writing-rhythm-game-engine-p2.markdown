@@ -23,7 +23,7 @@ In the computer world, models are just data. For our purposes, a model is a list
 
 ![Image result for 3D cube](http://www.zetaprints.com/help/wp-content/uploads/2008/11/cubeperspective2.jpg)  
 
-So what's a cube in computer land? Simple. 36 sets of (X, Y, Z) coordinates. You may be wondering, "why 35? cubes only have 8 vertices", and you'd be correct for wondering why this is the case. GPU's don't really like squares (aka. quads), or even really polys (5+ vertices). What GPU's like to work with are triangles. It might be easier for a 3D modeler to draw with something such as a poly, but when that goes to the GPU it has to break it down to a triangle, taking up valuable time.
+So what's a cube in computer land? Simple. 36 sets of (X, Y, Z) coordinates. You may be wondering, "why 36? cubes only have 8 vertices", and you'd be correct for wondering why this is the case. GPU's don't really like squares (aka. quads), or even really polys (5+ vertices). What GPU's like to work with are triangles. It might be easier for a 3D modeler to draw with something such as a poly, but when that goes to the GPU it has to break it down to a triangle, taking up valuable time.
 
 Therefore, we can break down each face of the cube into two triangles. A cube has 6 faces, meaning it will consist of 12 triangles. A triangle has 3 vertices. Multiply 12 by 3, and you have 36. Yes, you will have four duplicates of each vertex, but because of how the triangles are drawn, this seems to be a necessary inefficiency (though if you're a game dev who knows otherwise - I'd love to hear about it :D) 
 
