@@ -11,7 +11,6 @@ This post is in continuation of the first post I wrote, "Writing a Rhythm (GH) G
 ##### This is a part of a blog mini-series
 
 [Part I - Architecture](https://specterdev.ca/2018/writing-rhythm-game-engine-p1/)
-
 *Part II - Model View Projection*
 
 ------
@@ -36,6 +35,7 @@ So we've done it, we've draw a 3D cube on a 2D screen! But wait... on a 2D scree
 
 
 
+
 ## How do we move the camera?
 
 In most games, the character (also referred to as a "camera" in the game development world), can move around via the WASD keys on the keyboard. If there's a chair in front of the character in the game, you can hold "W" to advance towards it.
@@ -45,6 +45,7 @@ The funny thing is, this *isn't* how it actually works in the computer world. In
 This means that for *every* model in the game that's in our view window, every frame the model's position in the world has to be calculated according to your view. It's a bit selfish, but it's ok because it benefits the GPU too.
 
 This means I had to accommodate for this in my model class. More on this later.
+
 
 
 
@@ -65,6 +66,7 @@ This means we want matrices. Luckily, the OpenGL dependencies that I installed e
 ```cpp
 #include <glm/gtc/matrix_transform.hpp>
 ```
+
 
 
 
@@ -136,6 +138,7 @@ When calculating the final position, it must be calculated by`Final Position Mat
 
 
 
+
 ## Projection x Model x View, Model View Projection
 
 Wait... we call it "Model View Projection" but to calculate the final positions of objects in the world, we have to multiply it in reverse order? (remember, order for multiplication matters with matrices). I honestly can't explain this, you'd think the name would hint at the order given that the order is so important - I guess "Projection Model View" just doesn't have the same ring to it.
@@ -190,6 +193,7 @@ scene->setPerspective(45.0f, (float)(4.0 / 3.0), 0.1f, 100.0f);
 
 
 
+
 ## Putting it all together
 
 So the scene manager taking care of the camera position and perspectives is all well and good, but as stated above, the `Projection x Model x View` calculation must be made for every model in the scene every frame. This means it will have to get handled in each model's `draw()` function. This calculation will be made in a vertex shader because it's faster that way.
@@ -220,6 +224,7 @@ glm::mat4 MVP = projection * view * modelPos;
 
 glUniformMatrix4fv(matrixID, 1, GL_FALSE, &MVP[0][0]);
 ```
+
 
 
 
