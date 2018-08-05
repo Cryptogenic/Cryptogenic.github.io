@@ -76,6 +76,8 @@ Matrices help solve this issue. With an identity matrix for the vertex / vector,
 
 Below is a generic formula for calculating a new position for a transformed vector, where `T` is translation (movement), and `S` is scale (increasing/decreasing the size). I'm just going to ignore the math for rotation matrixes because they involve scary stuff like sines and cosines and other annoying trigonometry. I hate trig so I'll pretend it doesn't exist in this case :)
 
+If you are interested in rotation magic though, do a Google search for "Euler Rotation" and "Quaternions".
+
 `S` = scale, `T` = translate, `x, y, z` are the magnitudes (or positions in the Identity case), and `w` is whether or not the vector is a magnitude or direction.
 
 <pre>
