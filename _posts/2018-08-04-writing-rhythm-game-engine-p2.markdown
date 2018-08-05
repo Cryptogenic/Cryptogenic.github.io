@@ -90,6 +90,8 @@ __              __                  __ __                     __ __
 __              __                  __ __                     __ __
 </pre>
 
+Notice that W is never changed by neither translation or scale transformations - this is a good thing because it keeps the information of whether or not the vector is a position or direction in-tact.
+
 Looks a bit scary, but it's just plug and play. GLM luckily also handles this for us, we can just give the X, Y, and Z magnitudes into a function called `glm::mat4()` and it'll create the matrix implicitly. But it's important to know what's happening under the hood.
 
 #### Implementation
