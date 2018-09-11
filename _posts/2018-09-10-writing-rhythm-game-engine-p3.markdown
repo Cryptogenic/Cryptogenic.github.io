@@ -173,7 +173,7 @@ currentTime = glfwGetTime();
 
 if (currentTime - previousTime >= mspt)
 {
-    for (auto it = notes.begin(); it != notes.end();)
+	for (auto it = notes.begin(); it != notes.end();)
 	{
 		Models::Note *note = *it;
 
@@ -192,10 +192,10 @@ if (currentTime - previousTime >= mspt)
 
 		note->translate(previousPositionX, previousPositionY, newPositionZ);
         
-        it++;
-    }
+        	it++;
+	}
     
-    previousTime += mspt;
+	previousTime += mspt;
 	currentTick += increment;
 
 	scene->setCurrentTick(currentTick);
