@@ -12,6 +12,7 @@ This post is in continuation of the "Rhythm Game Engine" mini-series. It's been 
 ##### This is a part of a blog mini-series
 
 [Part I - Architecture](https://specterdev.ca/2018/writing-rhythm-game-engine-p1/)
+
 [Part II - Model View Projection](https://specterdev.ca/2018/writing-rhythm-game-engine-p2/)
 
 *Part III - Chart Loading*
